@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Support — EatLo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root { --brand:#ff4500; --brand2:#ff7a00; --dark:#12120f; --surface:#1c1c19; --card:#242420; --border:rgba(255,255,255,0.08); --text:#f5f5f0; --muted:#9e9e90; --success:#00c896; --r:14px; --rs:10px; }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Nunito',sans-serif; background:var(--dark); color:var(--text); min-height:100vh; }
+    nav { background:rgba(18,18,15,0.96); backdrop-filter:blur(20px); padding:12px 20px; display:flex; align-items:center; gap:14px; border-bottom:1px solid var(--border); position:sticky; top:0; z-index:100; }
+    .back-link { color:var(--muted); font-size:1.1rem; text-decoration:none; }
+    .nav-title { font-size:1.1rem; font-weight:900; }
+    .container { max-width:680px; margin:0 auto; padding:28px 16px 80px; }
+    .hero { text-align:center; margin-bottom:32px; }
+    .hero-icon { width:72px; height:72px; border-radius:20px; background:linear-gradient(135deg,var(--brand),var(--brand2)); display:flex; align-items:center; justify-content:center; font-size:1.8rem; margin:0 auto 16px; box-shadow:0 10px 30px rgba(255,69,0,0.3); }
+    .hero h1 { font-size:1.6rem; font-weight:900; margin-bottom:6px; }
+    .hero p { color:var(--muted); font-size:0.9rem; }
+    .contact-cards { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:14px; margin-bottom:28px; }
+    .contact-card { background:var(--card); border:1px solid var(--border); border-radius:var(--r); padding:22px; text-decoration:none; transition:all 0.2s; display:flex; align-items:center; gap:14px; }
+    .contact-card:hover { border-color:rgba(255,69,0,0.3); transform:translateY(-3px); }
+    .cc-icon { width:46px; height:46px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0; }
+    .cc-icon.phone { background:rgba(0,200,150,0.12); color:var(--success); }
+    .cc-icon.email { background:rgba(255,69,0,0.12); color:var(--brand); }
+    .cc-label { font-size:0.75rem; font-weight:800; color:var(--muted); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:3px; }
+    .cc-val { font-size:0.95rem; font-weight:800; color:var(--text); }
+    .faq-section h2 { font-size:1.1rem; font-weight:900; margin-bottom:14px; }
+    .faq-item { background:var(--card); border:1px solid var(--border); border-radius:var(--rs); margin-bottom:10px; overflow:hidden; }
+    .faq-q { padding:16px 18px; font-weight:800; font-size:0.9rem; cursor:pointer; display:flex; justify-content:space-between; align-items:center; }
+    .faq-q i { color:var(--muted); transition:transform 0.2s; }
+    .faq-a { padding:0 18px; max-height:0; overflow:hidden; transition:all 0.3s; font-size:0.85rem; color:var(--muted); line-height:1.6; }
+    .faq-item.open .faq-a { max-height:200px; padding:0 18px 16px; }
+    .faq-item.open .faq-q i { transform:rotate(180deg); }
+    .bnav { display:none; position:fixed; bottom:0; left:0; right:0; background:rgba(18,18,15,0.97); backdrop-filter:blur(20px); border-top:1px solid var(--border); padding:8px 0 12px; justify-content:space-around; }
+    @media(max-width:768px) { .bnav { display:flex; } }
+    .bnav-item { display:flex; flex-direction:column; align-items:center; gap:3px; text-decoration:none; color:var(--muted); font-size:0.65rem; font-weight:800; padding:4px 12px; }
+    .bnav-item i { font-size:1.2rem; }
+    .bnav-item.active { color:var(--brand); }
+  </style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i></a>
+  <span class="nav-title">Help & Support</span>
+</nav>
+<div class="container">
+  <div class="hero">
+    <div class="hero-icon"><i class="fas fa-headset"></i></div>
+    <h1>How can we help?</h1>
+    <p>We're here 24/7 to help you with any issue</p>
+  </div>
+
+  <div class="contact-cards">
+    <a href="tel:+917666745468" class="contact-card">
+      <div class="cc-icon phone"><i class="fas fa-phone"></i></div>
+      <div>
+        <div class="cc-label">Call Us</div>
+        <div class="cc-val">+91 76667 45468</div>
+      </div>
+    </a>
+    <a href="mailto:eatlosupport@gmail.com" class="contact-card">
+      <div class="cc-icon email"><i class="fas fa-envelope"></i></div>
+      <div>
+        <div class="cc-label">Email Us</div>
+        <div class="cc-val">eatlosupport@gmail.com</div>
+      </div>
+    </a>
+  </div>
+
+  <div class="faq-section">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">How long does delivery take? <i class="fas fa-chevron-down"></i></div>
+      <div class="faq-a">Delivery typically takes 25–45 minutes depending on your location and the restaurant's prep time. You can track your order in real-time from the My Orders page.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">How do I track my order? <i class="fas fa-chevron-down"></i></div>
+      <div class="faq-a">Go to My Orders page and enter your phone number. You'll see all your orders with live status updates.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What if I receive the wrong order? <i class="fas fa-chevron-down"></i></div>
+      <div class="faq-a">We're sorry about that! Please call us immediately on +91 76667 45468 or email eatlosupport@gmail.com. We'll resolve it within 24 hours.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Can I cancel my order? <i class="fas fa-chevron-down"></i></div>
+      <div class="faq-a">Orders can be cancelled within 2 minutes of placing. After that, the restaurant has already started preparing it. Contact support immediately for help.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">How do I get a refund? <i class="fas fa-chevron-down"></i></div>
+      <div class="faq-a">Refunds are processed within 3–5 business days to your original payment method. Contact us via email or phone to initiate a refund.</div>
+    </div>
+  </div>
+</div>
+
+<nav class="bnav">
+  <a href="index.html" class="bnav-item"><i class="fas fa-house"></i> Home</a>
+  <a href="my-orders.html" class="bnav-item"><i class="fas fa-list-check"></i> Orders</a>
+  <a href="cart.html" class="bnav-item"><i class="fas fa-bag-shopping"></i> Cart</a>
+  <a href="support.html" class="bnav-item active"><i class="fas fa-headset"></i> Help</a>
+</nav>
+
+<script>
+function toggleFaq(el) {
+  el.closest('.faq-item').classList.toggle('open');
+}
+</script>
+</body>
+</html>

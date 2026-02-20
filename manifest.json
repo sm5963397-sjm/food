@@ -1,0 +1,48 @@
+{
+  "name": "EatLo — Food Delivered Fresh",
+  "short_name": "EatLo",
+  "description": "Order fresh food from local restaurants near you",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#12120f",
+  "theme_color": "#ff4500",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "https://api.dicebear.com/7.x/icons/svg?seed=eatlo&icon=burger&backgroundColor=ff4500&radius=20",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://api.dicebear.com/7.x/icons/svg?seed=eatlo&icon=burger&backgroundColor=ff4500&radius=20",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400",
+      "sizes": "400x300",
+      "type": "image/jpeg",
+      "label": "EatLo Homepage"
+    }
+  ],
+  "categories": ["food", "shopping"],
+  "lang": "en-IN",
+  "shortcuts": [
+    {
+      "name": "My Orders",
+      "short_name": "Orders",
+      "url": "/my-orders.html",
+      "icons": [{ "src": "https://api.dicebear.com/7.x/icons/svg?seed=orders&icon=list&backgroundColor=ff4500", "sizes": "96x96" }]
+    },
+    {
+      "name": "My Cart",
+      "short_name": "Cart",
+      "url": "/cart.html",
+      "icons": [{ "src": "https://api.dicebear.com/7.x/icons/svg?seed=cart&icon=shoppingCart&backgroundColor=ff4500", "sizes": "96x96" }]
+    }
+  ]
+}

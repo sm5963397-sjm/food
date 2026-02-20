@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#ff4500">
+  <title>Cart — EatLo</title>
+  <link rel="manifest" href="manifest.json">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --brand:#ff4500; --brand2:#ff7a00; --dark:#12120f; --surface:#1c1c19;
+      --card:#242420; --border:rgba(255,255,255,0.08); --text:#f5f5f0;
+      --muted:#9e9e90; --success:#00c896; --r:14px; --rs:10px;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Nunito',sans-serif; background:var(--dark); color:var(--text); min-height:100vh; }
+
+    nav {
+      background:rgba(18,18,15,0.96); backdrop-filter:blur(20px);
+      padding:12px 20px; display:flex; align-items:center; gap:14px;
+      border-bottom:1px solid var(--border); position:sticky; top:0; z-index:100;
+    }
+    .back-link { color:var(--muted); font-size:1.1rem; text-decoration:none; transition:color 0.2s; }
+    .back-link:hover { color:var(--brand); }
+    .nav-title { font-size:1.1rem; font-weight:900; }
+
+    .container { max-width:860px; margin:0 auto; padding:20px 16px 120px; }
+
+    /* Cart layout */
+    @media (min-width:768px) {
+      .cart-layout { display:grid; grid-template-columns:1.5fr 1fr; gap:24px; align-items:start; }
+    }
+
+    /* Store group */
+    .store-group { background:var(--card); border:1px solid var(--border); border-radius:var(--r); margin-bottom:16px; overflow:hidden; }
+    .sg-header { padding:14px 18px; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:10px; }
+    .sg-emoji { font-size:1.1rem; }
+    .sg-name { font-size:0.95rem; font-weight:900; }
+
+    /* Cart item */
+    .cart-item { display:flex; align-items:center; gap:14px; padding:14px 18px; border-bottom:1px solid var(--border); }
+    .cart-item:last-child { border-bottom:none; }
+    .ci-img { width:64px; height:64px; border-radius:var(--rs); background:var(--surface) center/cover no-repeat; flex-shrink:0; }
+    .ci-info { flex:1; min-width:0; }
+    .ci-name { font-weight:800; font-size:0.95rem; }
+    .ci-price { color:var(--brand); font-weight:800; font-size:0.9rem; margin-top:2px; }
+    .ci-actions { display:flex; align-items:center; gap:8px; flex-shrink:0; }
+    .qty-wrap { display:flex; align-items:center; background:var(--surface); border-radius:50px; overflow:hidden; border:1px solid var(--border); }
+    .qty-btn { width:30px; height:30px; border:none; background:transparent; color:var(--text); font-size:1rem; font-weight:900; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.15s; }
+    .qty-btn:hover { background:rgba(255,69,0,0.15); color:var(--brand); }
+    .qty-num { min-width:26px; text-align:center; font-weight:900; font-size:0.9rem; }
+    .remove-btn { width:30px; height:30px; border-radius:8px; border:none; background:rgba(255,68,102,0.1); color:#ff4466; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.2s; font-size:0.8rem; }
+    .remove-btn:hover { background:#ff4466; color:white; }
+
+    /* Summary / form */
+    .summary-card { background:var(--card); border:1px solid var(--border); border-radius:var(--r); padding:22px; position:sticky; top:80px; }
+    .summary-title { font-size:1rem; font-weight:900; margin-bottom:18px; }
+    .sum-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; font-size:0.9rem; color:var(--muted); }
+    .sum-row.total { border-top:1px dashed var(--border); padding-top:14px; margin-top:6px; color:var(--text); font-weight:900; font-size:1.1rem; }
+    .sum-row.total span:last-child { color:var(--brand); font-size:1.3rem; }
+    .divider { border:none; border-top:1px solid var(--border); margin:18px 0; }
+
+    .finput {
+      width:100%; background:var(--surface); border:2px solid var(--border);
+      border-radius:var(--rs); padding:12px 16px; font-family:inherit;
+      font-size:0.9rem; color:var(--text); margin-bottom:12px; transition:all 0.2s;
+    }
+    .finput:focus { outline:none; border-color:var(--brand); }
+    .finput::placeholder { color:var(--muted); }
+    textarea.finput { resize:none; min-height:70px; }
+    .checkout-btn {
+      width:100%; padding:15px; background:linear-gradient(135deg, var(--brand), var(--brand2));
+      color:white; border:none; border-radius:50px; font-family:inherit;
+      font-size:1rem; font-weight:900; cursor:pointer; margin-top:6px;
+      box-shadow:0 8px 24px rgba(255,69,0,0.3); transition:all 0.2s;
+    }
+    .checkout-btn:hover { transform:translateY(-2px); box-shadow:0 12px 32px rgba(255,69,0,0.4); }
+    .checkout-btn:disabled { background:#333; box-shadow:none; cursor:not-allowed; transform:none; }
+
+    /* Empty */
+    .empty-cart { text-align:center; padding:80px 20px; }
+    .empty-cart .icon { font-size:3.5rem; margin-bottom:16px; opacity:0.25; }
+    .empty-cart h3 { font-size:1.3rem; font-weight:800; color:var(--muted); }
+    .empty-cart p { color:var(--muted); font-size:0.9rem; margin:8px 0 24px; }
+    .browse-btn {
+      display:inline-flex; align-items:center; gap:8px;
+      background:linear-gradient(135deg, var(--brand), var(--brand2));
+      color:white; padding:12px 28px; border-radius:50px; text-decoration:none;
+      font-weight:800; font-size:0.9rem; box-shadow:0 6px 20px rgba(255,69,0,0.3);
+    }
+
+    /* Bottom bar on mobile */
+    .mobile-checkout { display:none; position:fixed; bottom:0; left:0; right:0; z-index:500;
+      background:rgba(18,18,15,0.97); backdrop-filter:blur(20px);
+      padding:12px 20px; border-top:1px solid var(--border); }
+    @media (max-width:768px) { .mobile-checkout { display:block; } .summary-card { display:none; } }
+    .mob-total { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
+    .mob-total span { font-size:0.82rem; color:var(--muted); font-weight:700; }
+    .mob-total strong { font-size:1.1rem; color:var(--brand); font-weight:900; }
+    .mob-form { display:none; }
+    .mob-form.show { display:block; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i></a>
+  <span class="nav-title">Your Cart</span>
+</nav>
+
+<div class="container" id="main-container">
+  <!-- content injected -->
+</div>
+
+<!-- Mobile checkout bottom sheet -->
+<div class="mobile-checkout" id="mob-checkout" style="display:none">
+  <div class="mob-total">
+    <span>Total (incl. delivery)</span>
+    <strong id="mob-total-val">₹0</strong>
+  </div>
+  <div class="mob-form" id="mob-form">
+    <input class="finput" type="text" id="mob-name" placeholder="Full Name">
+    <input class="finput" type="tel" id="mob-phone" placeholder="Phone Number" maxlength="10">
+    <textarea class="finput" id="mob-address" placeholder="Delivery Address"></textarea>
+    <button class="checkout-btn" id="mob-checkout-btn" onclick="placeOrder('mob')">
+      <i class="fas fa-bag-shopping"></i> Place Order
+    </button>
+  </div>
+  <button class="checkout-btn" id="mob-proceed-btn" onclick="toggleMobForm()" style="display:block">
+    <i class="fas fa-arrow-right"></i> Proceed to Checkout
+  </button>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey:"AIzaSyA9ow668puMztfqJcfAHkJcXXBlWjWFIx8",
+    authDomain:"eatlo-ec2f6.firebaseapp.com",
+    projectId:"eatlo-ec2f6",
+    storageBucket:"eatlo-ec2f6.firebasestorage.app",
+    messagingSenderId:"298601218259",
+    appId:"1:298601218259:web:d8b54f5322139f42881426"
+  };
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  const DELIVERY_FEE = 40;
+  let cart = JSON.parse(localStorage.getItem('eatlo_cart')) || [];
+  const mainEl = document.getElementById('main-container');
+
+  function render() {
+    if (cart.length === 0) {
+      document.getElementById('mob-checkout').style.display = 'none';
+      mainEl.innerHTML = `
+        <div class="empty-cart">
+          <div class="icon">🛒</div>
+          <h3>Your cart is empty</h3>
+          <p>Add some delicious items to get started!</p>
+          <a href="index.html" class="browse-btn"><i class="fas fa-arrow-left"></i> Browse Menu</a>
+        </div>`;
+      return;
+    }
+
+    document.getElementById('mob-checkout').style.display = 'block';
+
+    // Group by store
+    const grouped = {};
+    cart.forEach(item => {
+      const key = item.storeId || '__nostore__';
+      const sn = item.storeName || 'Restaurant';
+      if (!grouped[key]) grouped[key] = { name: sn, items: [] };
+      grouped[key].items.push(item);
+    });
+
+    const subtotal = cart.reduce((s, i) => s + i.price * (i.quantity || 1), 0);
+    const total = subtotal + DELIVERY_FEE;
+
+    let cartHtml = '';
+    Object.values(grouped).forEach(group => {
+      cartHtml += `
+        <div class="store-group">
+          <div class="sg-header">
+            <span class="sg-emoji">🍴</span>
+            <span class="sg-name">${group.name}</span>
+          </div>
+          ${group.items.map(item => `
+            <div class="cart-item" id="ci-${item.id}">
+              <div class="ci-img" style="background-image:url('${item.image||''}')"></div>
+              <div class="ci-info">
+                <div class="ci-name">${item.name}</div>
+                <div class="ci-price">₹${item.price * (item.quantity||1)}</div>
+              </div>
+              <div class="ci-actions">
+                <div class="qty-wrap">
+                  <button class="qty-btn" onclick="changeQty('${item.id}', -1)">−</button>
+                  <span class="qty-num">${item.quantity||1}</span>
+                  <button class="qty-btn" onclick="changeQty('${item.id}', 1)">+</button>
+                </div>
+                <button class="remove-btn" onclick="removeItem('${item.id}')"><i class="fas fa-trash"></i></button>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    });
+
+    const summaryHtml = `
+      <div class="summary-card">
+        <div class="summary-title">Order Summary</div>
+        <div class="sum-row"><span>Subtotal</span><span>₹${subtotal}</span></div>
+        <div class="sum-row"><span>Delivery fee</span><span>₹${DELIVERY_FEE}</span></div>
+        <div class="sum-row total"><span>Total</span><span>₹${total}</span></div>
+        <hr class="divider">
+        <input class="finput" type="text" id="name" placeholder="Full Name">
+        <input class="finput" type="tel" id="phone" placeholder="Phone Number" maxlength="10">
+        <textarea class="finput" id="address" placeholder="Full Delivery Address"></textarea>
+        <button class="checkout-btn" id="checkout-btn" onclick="placeOrder('desk')">
+          <i class="fas fa-bag-shopping"></i> Place Order
+        </button>
+      </div>
+    `;
+
+    mainEl.innerHTML = `<div class="cart-layout"><div>${cartHtml}</div>${summaryHtml}</div>`;
+
+    // Update mobile total
+    document.getElementById('mob-total-val').textContent = '₹' + total;
+  }
+
+  window.changeQty = function(id, delta) {
+    const idx = cart.findIndex(i => i.id === id);
+    if (idx === -1) return;
+    cart[idx].quantity = (cart[idx].quantity || 1) + delta;
+    if (cart[idx].quantity <= 0) cart.splice(idx, 1);
+    save();
+    render();
+  };
+
+  window.removeItem = function(id) {
+    cart = cart.filter(i => i.id !== id);
+    save();
+    render();
+  };
+
+  function save() {
+    localStorage.setItem('eatlo_cart', JSON.stringify(cart));
+  }
+
+  window.toggleMobForm = function() {
+    const form = document.getElementById('mob-form');
+    const btn = document.getElementById('mob-proceed-btn');
+    const showing = form.classList.toggle('show');
+    btn.style.display = showing ? 'none' : 'block';
+  };
+
+  window.placeOrder = async function(mode) {
+    const prefix = mode === 'mob' ? 'mob-' : '';
+    const name = document.getElementById(prefix + 'name')?.value?.trim();
+    const phone = document.getElementById(prefix + 'phone')?.value?.trim();
+    const address = document.getElementById(prefix + 'address')?.value?.trim();
+
+    if (!name || !phone || !address) { alert('Please fill all fields'); return; }
+    if (!/^\d{10}$/.test(phone)) { alert('Enter a valid 10-digit phone number'); return; }
+
+    const btn = document.getElementById(prefix === 'mob-' ? 'mob-checkout-btn' : 'checkout-btn');
+    btn.disabled = true; btn.textContent = 'Placing Order...';
+
+    const subtotal = cart.reduce((s,i) => s + i.price * (i.quantity||1), 0);
+    const total = subtotal + DELIVERY_FEE;
+
+    // Group items by store for admin visibility
+    const storeGroups = {};
+    cart.forEach(item => {
+      const key = item.storeId || 'unknown';
+      const sn = item.storeName || 'Unknown Store';
+      if (!storeGroups[key]) storeGroups[key] = { storeId: key, storeName: sn, items: [] };
+      storeGroups[key].items.push({ name:item.name, price:item.price, quantity:item.quantity||1, image:item.image });
+    });
+
+    const order = {
+      name, phone, address,
+      items: cart,
+      storeGroups: Object.values(storeGroups),
+      subtotal, deliveryFee: DELIVERY_FEE, total,
+      status: 'Confirmed',
+      createdAt: new Date().toISOString(),
+      date: new Date().toLocaleString('en-IN')
+    };
+
+    try {
+      const ref = await addDoc(collection(db, 'orders'), order);
+      localStorage.setItem('eatlo_phone', phone);
+      localStorage.removeItem('eatlo_cart');
+      window.location.href = 'order-success.html?id=' + ref.id;
+    } catch(e) {
+      alert('Order failed: ' + e.message);
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fas fa-bag-shopping"></i> Place Order';
+    }
+  };
+
+  render();
+</script>
+</body>
+</html>

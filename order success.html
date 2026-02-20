@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#ff4500">
+  <title>Order Placed! — EatLo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root { --brand:#ff4500; --brand2:#ff7a00; --dark:#12120f; --card:#242420; --border:rgba(255,255,255,0.08); --text:#f5f5f0; --muted:#9e9e90; --success:#00c896; --r:16px; }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Nunito',sans-serif; background:var(--dark); color:var(--text); min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:24px; }
+    .success-card { background:var(--card); border:1px solid var(--border); border-radius:24px; padding:40px 32px; text-align:center; max-width:420px; width:100%; }
+    .check-ring { width:90px; height:90px; border-radius:50%; background:rgba(0,200,150,0.12); display:flex; align-items:center; justify-content:center; margin:0 auto 20px; animation:pop 0.5s ease; }
+    @keyframes pop { 0%{transform:scale(0);opacity:0} 80%{transform:scale(1.1)} 100%{transform:scale(1);opacity:1} }
+    .check-ring i { font-size:2.2rem; color:var(--success); }
+    h1 { font-size:1.8rem; font-weight:900; margin-bottom:8px; }
+    .sub { color:var(--muted); font-size:0.9rem; line-height:1.5; margin-bottom:24px; }
+    .order-id { background:rgba(255,69,0,0.1); border:1px solid rgba(255,69,0,0.2); border-radius:var(--r); padding:14px 20px; margin-bottom:24px; }
+    .order-id p { font-size:0.75rem; color:var(--muted); font-weight:800; text-transform:uppercase; letter-spacing:0.5px; margin-bottom:4px; }
+    .order-id h2 { color:var(--brand); font-size:1.1rem; font-weight:900; letter-spacing:1px; }
+    .steps { display:flex; flex-direction:column; gap:12px; text-align:left; margin-bottom:28px; }
+    .step { display:flex; align-items:center; gap:12px; padding:12px; border-radius:var(--r); background:rgba(0,200,150,0.06); }
+    .step-num { width:32px; height:32px; border-radius:50%; background:rgba(0,200,150,0.15); color:var(--success); display:flex; align-items:center; justify-content:center; font-weight:900; font-size:0.8rem; flex-shrink:0; }
+    .step p { font-size:0.85rem; font-weight:700; }
+    .actions { display:flex; flex-direction:column; gap:10px; }
+    .btn { width:100%; padding:14px; border-radius:50px; border:none; font-family:inherit; font-weight:900; font-size:0.95rem; cursor:pointer; text-decoration:none; display:flex; align-items:center; justify-content:center; gap:8px; transition:all 0.2s; }
+    .btn-primary { background:linear-gradient(135deg, var(--brand), var(--brand2)); color:white; box-shadow:0 6px 20px rgba(255,69,0,0.3); }
+    .btn-primary:hover { transform:translateY(-2px); }
+    .btn-outline { background:transparent; border:1.5px solid var(--border); color:var(--text); }
+    .btn-outline:hover { border-color:var(--brand); color:var(--brand); }
+  </style>
+</head>
+<body>
+  <div class="success-card">
+    <div class="check-ring"><i class="fas fa-check"></i></div>
+    <h1>Order Placed! 🎉</h1>
+    <p class="sub">Your order has been received and confirmed. Get ready for something delicious!</p>
+    <div class="order-id">
+      <p>Your Order ID</p>
+      <h2 id="order-id-display">...</h2>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><p>Order Confirmed ✅</p></div>
+      <div class="step"><div class="step-num">2</div><p>Restaurant is preparing your food 🔥</p></div>
+      <div class="step"><div class="step-num">3</div><p>Delivery partner picks it up 🛵</p></div>
+      <div class="step"><div class="step-num">4</div><p>Delivered to your door 🏠</p></div>
+    </div>
+    <div class="actions">
+      <a href="my-orders.html" class="btn btn-primary"><i class="fas fa-list-check"></i> Track My Order</a>
+      <a href="index.html" class="btn btn-outline"><i class="fas fa-arrow-left"></i> Back to Menu</a>
+    </div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id') || 'N/A';
+    document.getElementById('order-id-display').textContent = '#' + id.slice(0, 10).toUpperCase();
+  </script>
+</body>
+</html>
